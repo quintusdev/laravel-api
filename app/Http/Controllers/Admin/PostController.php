@@ -139,13 +139,13 @@ class PostController extends Controller
     {
         $post->tecnologies()->sync([]);
 
-        Storage::delete($post->image);
+        !is_null($post->image) && Storage::delete($post->image);
 
         $title_post = $post->title;
 
         /* elimino il post */
         $post->delete();
         /* effettuo il rediresct alla pagina index */
-        return redirect()->route('admin.posts.index')->with('message', "$title_post creato correttamente");
+        return redirect()->route('admin.posts.index')->with('message', "$title_post cancellato correttamente");
     }
 }
