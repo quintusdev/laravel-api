@@ -12,7 +12,7 @@ class PostController extends Controller
     public function index()
     {
         /* Metto tutti i valori della classe Post dentro la variabile */
-        $posts = Post::all();
+        $posts = Post::with('type', 'tecnologies')->get();
 
         return response()->json([
             /* imposto il valore success su true */
