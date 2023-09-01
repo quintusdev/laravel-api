@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 
 use App\Models\Lead;
+use App\Mail\NewContact;
 
 class LeadController extends Controller
 {
@@ -29,5 +30,13 @@ class LeadController extends Controller
                 'errors' => $validator->errors(),
             ]);
         }
+
+        /* salvo i dati nel database */
+        $new_lead = new Lead();
+        $new_lead->fill($data);
+        $new_lead->save();
+
+        /* invio mail */
+        Mail::to('info@boolfolio.com')->send(new NewContact($new_lead));
     }
 }
